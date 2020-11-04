@@ -12,7 +12,7 @@
 	<artifactId>promocoes-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>promocoes-web</name>
-	<description>Um gerenciador de promoções para os itens que estão com ofertas em algum site.</description>
+	<description>Um gerenciador de promoções.</description>
 
 	<properties>
 		<java.version>1.8</java.version>
