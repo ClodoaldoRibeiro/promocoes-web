@@ -42,6 +42,8 @@ public class SocialMetaTagService {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e.getCause());
 		}
+
+		// System.out.println(" getOpenGraphByUrl : " + tag.toString());
 		return tag;
 	}
 
@@ -56,6 +58,7 @@ public class SocialMetaTagService {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e.getCause());
 		}
+		// System.out.println(" getTwitterCardByUrl: " + tag.toString());
 		return tag;
 	}
 
