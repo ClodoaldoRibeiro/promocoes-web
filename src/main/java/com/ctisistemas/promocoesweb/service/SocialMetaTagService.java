@@ -63,14 +63,17 @@ public class SocialMetaTagService {
 	}
 
 	private boolean isEmpty(SocialMetaTag tag) {
-		if (tag.getImagem().isEmpty())
-			return true;
-		if (tag.getSite().isEmpty())
-			return true;
-		if (tag.getTitulo().isEmpty())
-			return true;
-		if (tag.getUrl().isEmpty())
-			return true;
+
+		if (tag != null) {
+			if (tag.getImagem().isEmpty())
+				return true;
+			if (tag.getSite().isEmpty())
+				return true;
+			if (tag.getTitulo().isEmpty())
+				return true;
+			if (tag.getUrl().isEmpty())
+				return true;
+		}
 		return false;
 	}
 }
