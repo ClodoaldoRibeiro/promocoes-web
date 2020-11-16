@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
@@ -14,34 +16,39 @@ import org.springframework.format.annotation.NumberFormat.Style;
 @Table(name = "promocoes")
 public class Promocao implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank(message = "É necesseráio informar um título")
 	@Column(name = "titulo", nullable = false)
 	private String titulo;
-	
+
+	@NotBlank(message = "O link da promoção é requerido")
 	@Column(name = "link_promocao", nullable = false)
 	private String linkPromocao;
-	
+
 	@Column(name = "site_promocao", nullable = false)
 	private String site;
-	
+
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@Column(name = "link_imagem", nullable = false)
 	private String linkImagem;
-	
+
+	@NotNull(message = "O preço é requerido")
 	@NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
 	@Column(name = "preco_promocao", nullable = false)
 	private BigDecimal preco;
-	
+
 	@Column(name = "total_likes")
 	private int likes;
-	
+
 	@Column(name = "data_cadastro", nullable = false)
 	private LocalDateTime dtCadastro;
-	
+
+	@NotNull(message = "Uma categoria é requerida")
 	@ManyToOne
 	@JoinColumn(name = "categoria_fk")
 	private Categoria categoria;
@@ -131,5 +138,5 @@ public class Promocao implements Serializable {
 		return "Promocao [id=" + id + ", titulo=" + titulo + ", linkPromocao=" + linkPromocao + ", site=" + site
 				+ ", descricao=" + descricao + ", linkImagem=" + linkImagem + ", preco=" + preco + ", likes=" + likes
 				+ ", dtCadastro=" + dtCadastro + ", categoria=" + categoria + "]";
-	}	
+	}
 }
