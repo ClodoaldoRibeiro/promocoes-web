@@ -54,18 +54,17 @@ public class PromocaoController {
 	 */
 	@PostMapping("/salvar")
 	public ResponseEntity<?> salvarPromocao(@Valid Promocao promocao, BindingResult result) {
-
-		// Marmazena no Map todos os erros encontrados
+		
 		if (result.hasErrors()) {
-
+			
 			Map<String, String> errors = new HashMap<>();
 			for (FieldError error : result.getFieldErrors()) {
 				errors.put(error.getField(), error.getDefaultMessage());
 			}
-
+			
 			return ResponseEntity.unprocessableEntity().body(errors);
 		}
-
+		
 		log.info("Promocao {}", promocao.toString());
 		promocao.setDtCadastro(LocalDateTime.now());
 		promocaoRepository.save(promocao);
