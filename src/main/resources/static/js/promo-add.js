@@ -2,7 +2,7 @@
 $("#form-add-promo").submit(function(evt) {
 	//bloquear o comportamento padrão do submit
 	evt.preventDefault();
-	
+
 	var promo = {};
 	promo.linkPromocao = $("#linkPromocao").val();
 	promo.descricao = $("#descricao").val();
@@ -11,9 +11,9 @@ $("#form-add-promo").submit(function(evt) {
 	promo.categoria = $("#categoria").val();
 	promo.linkImagem = $("#linkImagem").attr("src");
 	promo.site = $("#site").text();
-	
+
 	console.log('promo > ', promo);
-	
+
 	$.ajax({
 		method: "POST",
 		url: "/promocao/salvar",
@@ -29,6 +29,18 @@ $("#form-add-promo").submit(function(evt) {
 			$("#linkImagem").attr("src", "/images/promo-dark.png");
 			$("#site").text("");
 			$("#alert").addClass("alert alert-success").text("OK! Promoção cadastrada com sucesso.");
+		},
+		statusCode: {
+			422: function(xhr) {
+				console.log('status error:', xhr.status);
+				var errors = $.parseJSON(xhr.responseText);
+				$.each(errors, function(key, val) {
+					$("#" + key).addClass("is-invalid");
+					$("#error-" + key)
+						.addClass("invalid-feedback")
+						.append("<span class='error-span'>" + val + "</span>")
+				});
+			}
 		},
 		error: function(xhr) {
 			console.log("> error: ", xhr.responseText);
@@ -51,11 +63,11 @@ $("#form-add-promo").submit(function(evt) {
 $("#linkPromocao").on('change', function() {
 
 	var url = $(this).val();
-	
+
 	if (url.length > 7) {
-		
+
 		$.ajax({
-			method:"POST",
+			method: "POST",
 			url: "/meta/info?url=" + url,
 			cache: false,
 			beforeSend: function() {
@@ -65,7 +77,7 @@ $("#linkPromocao").on('change', function() {
 				$("#linkImagem").attr("src", "");
 				$("#loader-img").addClass("loader");
 			},
-			success: function( data ) {
+			success: function(data) {
 				console.log(data);
 				$("#titulo").val(data.titulo);
 				$("#site").text(data.site.replace("@", ""));
