@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,10 +51,9 @@ public class PromocaoController {
 
 	@GetMapping("/list")
 	public String listarOfertas(ModelMap model) {
-
 		Sort sort = Sort.by(Sort.Direction.DESC, "dtCadastro");
-
-		model.addAttribute("promocoes", promocaoRepository.findAll(sort));
+		PageRequest pageRequest = PageRequest.of(0, 8, sort);
+		model.addAttribute("promocoes", promocaoRepository.findAll(pageRequest));
 		return "promo-list";
 	}
 
