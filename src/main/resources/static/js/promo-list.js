@@ -1,5 +1,10 @@
 var pageNumber = 0;
 
+$(document).ready(function(){
+	$("#loader-img").hide();
+	$("#fim-btn").hide();
+});
+
 
 // efeito infinte scroll
 $(window).scroll(function() {
@@ -26,6 +31,9 @@ function loadByScrollBar(pageNumber) {
 		data: {
 			page: pageNumber
 		},
+		beforeSend: function() {
+			$("#loader-img").show();
+		},
 		success: function( response ) {
 			//console.log("resposta > ", response);
 			console.log("lista > ", response.length);
@@ -40,6 +48,12 @@ function loadByScrollBar(pageNumber) {
 				$("#fim-btn").show();
 				$("#loader-img").removeClass("loader");
 			}
+		},
+		error: function(xhr) {
+			alert("Ops, ocorreu um erro: " + xhr.status + " - " + xhr.statusText);
+		},
+		complete: function() {
+			$("#loader-img").hide();
 		}
 	})  
 }
