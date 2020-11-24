@@ -5,12 +5,20 @@
 				alt="Card image cap">
 		</div>
 		<div class="card-body">
-			<h5 class="card-title" th:text="${promo.site}">site.com.br</h5>
-			<p class="card-text" th:text="${promo.descricao}">sobre a
-				promoção</p>
 			<div>
-				<h6 class="badge badge-primary" th:text="|R$ ${{promo.preco}}|">R$
-					9,99</h6>
+				<p class="card-subtitle mb-2 text-muted"
+					th:text="${#strings.abbreviate(promo.titulo, 40)}">titulo</p>
+			</div>
+			<div>
+				<h5 class="card-title" th:text="${promo.site}">site.com.br</h5>
+			</div>
+
+			<div>
+				<p class="card-text" th:text="${#strings.abbreviate(promo.descricao, 100)}">sobre a
+					promoção</p>
+			</div>
+			<div>
+				<h6 class="badge badge-primary" th:text="|R$ ${{promo.preco}}|">R$9,99</h6>
 			</div>
 			<div class="btn-group">
 				<button th:id="${'likes-count-' + promo.id}" type="button"
