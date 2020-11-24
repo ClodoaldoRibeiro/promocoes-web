@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ctisistemas.promocoesweb.domain.Categoria;
 import com.ctisistemas.promocoesweb.domain.Promocao;
@@ -57,12 +58,14 @@ public class PromocaoController {
 		return "promo-list";
 	}
 
-	/**
-	 * Salvar uma promoção
-	 * 
-	 * @param Promoção      que será salva
-	 * @param BindingResult
-	 */
+	@GetMapping("/list/ajax")
+	public String listarOfertas(@RequestParam(name = "page", defaultValue = "1") int page, ModelMap model) {
+		Sort sort = Sort.by(Sort.Direction.DESC, "dtCadastro");
+		PageRequest pageRequest = PageRequest.of(page, 8, sort);
+		model.addAttribute("promocoes", promocaoRepository.findAll(pageRequest));
+		return "promo-card";
+	}
+
 	@PostMapping("/salvar")
 	public ResponseEntity<?> salvarPromocao(@Valid Promocao promocao, BindingResult result) {
 
