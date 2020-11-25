@@ -57,3 +57,20 @@ function loadByScrollBar(pageNumber) {
 		}
 	})  
 }
+
+// adicionar likes
+$(document).on("click", "button[id*='likes-btn-']", function() {
+	var id = $(this).attr("id").split("-")[2];
+	console.log("id: ", id);
+	
+	$.ajax({
+		method: "POST",
+		url: "/promocao/like/" + id,
+		success: function(response) {
+			$("#likes-count-" + id).text(response);
+		},
+		error: function(xhr) {
+			alert("Ops, ocorreu um erro: " + xhr.status + ", " + xhr.statusText);
+		}
+	});
+});
