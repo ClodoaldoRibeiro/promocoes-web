@@ -41,6 +41,12 @@ public class PromocaoController {
 	@Autowired
 	PromocaoRepository promocaoRepository;
 
+	@GetMapping("/site")
+	public ResponseEntity<?> autocompleteByTermo(@RequestParam("termo") String termo) {
+		List<String> sites = promocaoRepository.findSitesByTermo(termo);
+		return ResponseEntity.ok(sites);
+	}
+
 	@ModelAttribute("categorias")
 	public List<Categoria> getCategorias() {
 		return categoriaRepository.findAll();
