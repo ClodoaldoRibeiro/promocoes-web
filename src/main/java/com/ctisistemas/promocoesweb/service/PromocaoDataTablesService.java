@@ -5,8 +5,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ctisistemas.promocoesweb.domain.Promocao;
 import com.ctisistemas.promocoesweb.repository.PromocaoRepository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
@@ -21,19 +25,28 @@ public class PromocaoDataTablesService {
 		int start = Integer.parseInt(request.getParameter("start"));
 		int lenght = Integer.parseInt(request.getParameter("lenght"));
 		int draw = Integer.parseInt(request.getParameter("draw"));
+		
 
 		int current = currentPage(start, lenght);
 
 		String column = columnName(request);
 		Sort.Direction direction = orderBy(request);
 
+		Pageable pageable = PageRequest.of(current, lenght, direction, column);
+
+		Page<Promocao> page = queryBy(repository, repository, pageable);
+
 		// Montar o arquivo Json para a tabela da página
 		Map<String, Object> json = new LinkedHashMap<>();
 		json.put("draw", draw);
-		json.put("recordsTotal", null);
-		json.put("recordsFiltered", null);
-		json.put("data", null);
+		json.put("recordsTotal", page.getTotalElements());
+		json.put("recordsFiltered", page.getTotalElements());
+		json.put("data", page.getContent());
 		return json;
+	}
+
+	private Page<Promocao> queryBy(PromocaoRepository repository, PromocaoRepository repository2, Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
 	private Direction orderBy(HttpServletRequest request) {

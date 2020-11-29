@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import com.ctisistemas.promocoesweb.domain.Categoria;
 import com.ctisistemas.promocoesweb.domain.Promocao;
 import com.ctisistemas.promocoesweb.repository.CategoriaRepository;
 import com.ctisistemas.promocoesweb.repository.PromocaoRepository;
+import com.ctisistemas.promocoesweb.service.PromocaoDataTablesService;
 
 @Controller
 @RequestMapping("/promocao")
@@ -113,4 +115,16 @@ public class PromocaoController {
 		promocaoRepository.save(promocao);
 		return ResponseEntity.ok().build();
 	}
+
+	@GetMapping("/tabela")
+	public String showTabela() {
+		return "promo-datatables";
+	}
+
+	@GetMapping("/datatables/server")
+	public ResponseEntity<?> datatables(HttpServletRequest request) {
+		Map<String, Object> data = new PromocaoDataTablesService().execute(promocaoRepository, request);
+		return ResponseEntity.ok(data);
+	}
+
 }
