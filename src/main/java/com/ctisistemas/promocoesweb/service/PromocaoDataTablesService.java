@@ -18,33 +18,25 @@ import org.springframework.data.domain.Sort.Direction;
 
 public class PromocaoDataTablesService {
 
-	private String[] cols = { 	"id", 
-								"titulo", 
-								"site", 
-								"linkPromocao", 
-								"descricao", 
-								"linkImagem", 
-								"preco", 
-								"likes",
-								"dtCadastro", 
-								"categoria" };
+	private String[] cols = { "id", "titulo", "site", "linkPromocao", "descricao", "linkImagem", "preco", "likes",
+			"dtCadastro", "categoria" };
 
 	public Map<String, Object> execute(PromocaoRepository repository, HttpServletRequest request) {
-		
+
 		// Recupera os valores da página
 		int start = Integer.parseInt(request.getParameter("start"));
 		int length = Integer.parseInt(request.getParameter("length"));
 		int draw = Integer.parseInt(request.getParameter("draw"));
-		
 
 		int current = currentPage(start, length);
 
 		String column = columnName(request);
 		Sort.Direction direction = orderBy(request);
+		String search = searchBy(request);
 
 		Pageable pageable = PageRequest.of(current, length, direction, column);
 
-		Page<Promocao> page = queryBy(repository, repository, pageable);
+		Page<Promocao> page = queryBy(search, repository, repository, pageable);
 
 		// Montar o arquivo Json para a tabela da página
 		Map<String, Object> json = new LinkedHashMap<>();
@@ -55,8 +47,17 @@ public class PromocaoDataTablesService {
 		return json;
 	}
 
-	private Page<Promocao> queryBy(PromocaoRepository repository, PromocaoRepository repository2, Pageable pageable) {
-		return repository.findAll(pageable);
+	private Page<Promocao> queryBy(String search, PromocaoRepository repository, PromocaoRepository repository2,
+			Pageable pageable) {
+
+		if (search.isEmpty()) {
+			return repository.findAll(pageable);
+		}
+		return repository.findByTituloOrSiteOrCategoria(search, pageable);
+	}
+
+	private String searchBy(HttpServletRequest request) {
+		return request.getParameter("search[value]").isEmpty() ? "" : request.getParameter("search[value]");
 	}
 
 	private Direction orderBy(HttpServletRequest request) {
