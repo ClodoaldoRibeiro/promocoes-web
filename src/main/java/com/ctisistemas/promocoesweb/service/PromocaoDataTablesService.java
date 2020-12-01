@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.ctisistemas.promocoesweb.domain.Promocao;
 import com.ctisistemas.promocoesweb.repository.PromocaoRepository;
 
+import groovyjarjarasm.asm.util.Printer;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,23 +18,31 @@ import org.springframework.data.domain.Sort.Direction;
 
 public class PromocaoDataTablesService {
 
-	private String[] cols = { "id", "titulo", "site", "linkPromocao", "descricao", "linkImagem", "preco", "likes",
-			"dtCadastro", "categoria" };
+	private String[] cols = { 	"id", 
+								"titulo", 
+								"site", 
+								"linkPromocao", 
+								"descricao", 
+								"linkImagem", 
+								"preco", 
+								"likes",
+								"dtCadastro", 
+								"categoria" };
 
 	public Map<String, Object> execute(PromocaoRepository repository, HttpServletRequest request) {
-
+		
 		// Recupera os valores da página
 		int start = Integer.parseInt(request.getParameter("start"));
-		int lenght = Integer.parseInt(request.getParameter("lenght"));
+		int length = Integer.parseInt(request.getParameter("length"));
 		int draw = Integer.parseInt(request.getParameter("draw"));
 		
 
-		int current = currentPage(start, lenght);
+		int current = currentPage(start, length);
 
 		String column = columnName(request);
 		Sort.Direction direction = orderBy(request);
 
-		Pageable pageable = PageRequest.of(current, lenght, direction, column);
+		Pageable pageable = PageRequest.of(current, length, direction, column);
 
 		Page<Promocao> page = queryBy(repository, repository, pageable);
 

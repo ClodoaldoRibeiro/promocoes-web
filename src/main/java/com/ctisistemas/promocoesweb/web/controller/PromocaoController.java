@@ -123,6 +123,11 @@ public class PromocaoController {
 
 	@GetMapping("/datatables/server")
 	public ResponseEntity<?> datatables(HttpServletRequest request) {
+		
+		System.out.println("start: " + request.getParameter("start"));
+		System.out.println("length: " + request.getParameter("length"));
+		System.out.println("draw: " + request.getParameter("draw"));
+		
 		Map<String, Object> data = new PromocaoDataTablesService().execute(promocaoRepository, request);
 		return ResponseEntity.ok(data);
 	}

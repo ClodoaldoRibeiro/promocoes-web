@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
 	var table = $("#table-server").DataTable({
 		processing: true,
 		serverSide: true,
@@ -16,34 +15,10 @@ $(document).ready(function() {
 			{ data: 'linkPromocao' },
 			{ data: 'descricao' },
 			{ data: 'linkImagem' },
-			{ data: 'preco', render: $.fn.dataTable.render.number('.', ',', 2, 'R$') },
+			{ data: 'preco' },
 			{ data: 'likes' },
-			{
-				data: 'dtCadastro', render:
-					function(dtCadastro) {
-						return moment(dtCadastro).format('LLL');
-					}
-			},
+			{ data: 'dtCadastro' },
 			{ data: 'categoria.titulo' }
-		],
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'Editar',
-				attr: {
-					id: 'btn-editar',
-					type: 'button'
-				},
-				enabled: false
-			},
-			{
-				text: 'Excluir',
-				attr: {
-					id: 'btn-excluir',
-					type: 'button'
-				},
-				enabled: false
-			}
 		]
 	});
 });
