@@ -24,7 +24,71 @@ $(document).ready(function() {
 						return moment(dtCadastro).format('lll');
 					}
 			},
-			{data: 'categoria.titulo'},
+			{ data: 'categoria.titulo' },
+
+		],
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				text: 'Editar',
+				attr: {
+					id: 'btn-editar',
+					type: 'button'
+				},
+				enabled: false
+			},
+			{
+				text: 'Excluir',
+				attr: {
+					id: 'btn-excluir',
+					type: 'button'
+				},
+				enabled: false
+			}
 		]
 	});
+	
+	// acao para marcar/desmarcar botoes ao clicar na ordenacao 
+	$("#table-server thead").on('click', 'tr', function() {		
+		table.buttons().disable();
+	});
+
+
+	// acao para marcar/desmarcar linhas clicadas 
+	$("#table-server tbody").on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+			table.buttons().disable();
+		} else {
+			$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+			table.buttons().enable();
+		}
+	});
+
+
+	$("#btn-editar").on('click', function() {
+		if ( isSelectedRow() ) {
+			var id = getPromoId();
+			
+			$("#modal-form").modal('show');
+		}
+	});
+
+	$("#btn-excluir").on('click', function() {
+		if ( isSelectedRow() ) {
+			var id = getPromoId();
+			
+			$("#modal-delete").modal('show');
+		}
+	});
+	
+	function getPromoId() {
+		return table.row(table.$('tr.selected')).data().id;
+	}
+	
+	function isSelectedRow() {
+		var trow = table.row(table.$('tr.selected'));
+		return trow.data() !== undefined;
+	}
 });

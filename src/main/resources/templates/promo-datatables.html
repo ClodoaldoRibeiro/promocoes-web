@@ -21,6 +21,11 @@
 				</tr>
 			</thead>
 		</table>
+
+
+		<div th:replace="promo-datatables-modal :: modal-form"></div>
+		<div th:replace="promo-datatables-modal-del :: modal-delete"></div>
+
 	</div>
 
 	<script th:src="@{/js/promo-datatables.js}" th:fragment="js"></script>
