@@ -75,6 +75,8 @@ $(document).ready(function() {
 		}
 	});
 
+
+	//Modal de Excluir
 	$("#btn-excluir").on('click', function() {
 		if ( isSelectedRow() ) {
 			var id = getPromoId();
@@ -83,10 +85,32 @@ $(document).ready(function() {
 		}
 	});
 	
+	
+	$("#btn-del-modal").on('click', function(){
+		var id = getPromoId();
+		
+		$.ajax({
+			method: "GET",
+			url: "/promocao/delete/" + id,
+			success: function() {
+				$("#modal-delete").modal('hide');
+				table.buttons().disable();
+				table.ajax.reload();
+			},
+			error: function() {
+				alert("Ops... Ocorreu um erro, tente mais tarde.");
+			}
+		});
+		
+	});
+	
+	//Recupera o id
 	function getPromoId() {
 		return table.row(table.$('tr.selected')).data().id;
 	}
 	
+	
+	// Habilita ou Desabilita a seleção do item da tabela
 	function isSelectedRow() {
 		var trow = table.row(table.$('tr.selected'));
 		return trow.data() !== undefined;
