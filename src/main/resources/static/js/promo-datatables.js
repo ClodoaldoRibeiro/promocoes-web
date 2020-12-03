@@ -47,9 +47,9 @@ $(document).ready(function() {
 			}
 		]
 	});
-	
+
 	// acao para marcar/desmarcar botoes ao clicar na ordenacao 
-	$("#table-server thead").on('click', 'tr', function() {		
+	$("#table-server thead").on('click', 'tr', function() {
 		table.buttons().disable();
 	});
 
@@ -68,27 +68,51 @@ $(document).ready(function() {
 
 
 	$("#btn-editar").on('click', function() {
-		if ( isSelectedRow() ) {
+		if (isSelectedRow()) {
 			var id = getPromoId();
-			
-			$("#modal-form").modal('show');
+
+			$.ajax({
+				method: "GET",
+				url: "/promocao/edit/" + id,
+				beforeSend: function() {
+					// abre o modal
+					$("#modal-form").modal('show');
+				},
+				success: function(data) {
+					$("#edt_id").val(data.id);
+					$("#edt_site").text(data.site);
+					$("#edt_titulo").val(data.titulo);
+					$("#edt_descricao").val(data.descricao);
+					$("#edt_preco").val(data.preco.toLocaleString('pt-BR', {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					}));
+					$("#edt_categoria").val(data.categoria.id);
+					$("#edt_linkImagem").val(data.linkImagem);
+					$("#edt_imagem").attr('src', data.linkImagem);
+				},
+				error: function() {
+					alert("Ops... algum erro ocorreu, tente novamente.");
+				}
+
+			});
 		}
 	});
 
 
 	//Modal de Excluir
 	$("#btn-excluir").on('click', function() {
-		if ( isSelectedRow() ) {
+		if (isSelectedRow()) {
 			var id = getPromoId();
-			
+
 			$("#modal-delete").modal('show');
 		}
 	});
-	
-	
-	$("#btn-del-modal").on('click', function(){
+
+
+	$("#btn-del-modal").on('click', function() {
 		var id = getPromoId();
-		
+
 		$.ajax({
 			method: "GET",
 			url: "/promocao/delete/" + id,
@@ -101,15 +125,15 @@ $(document).ready(function() {
 				alert("Ops... Ocorreu um erro, tente mais tarde.");
 			}
 		});
-		
+
 	});
-	
+
 	//Recupera o id
 	function getPromoId() {
 		return table.row(table.$('tr.selected')).data().id;
 	}
-	
-	
+
+
 	// Habilita ou Desabilita a seleção do item da tabela
 	function isSelectedRow() {
 		var trow = table.row(table.$('tr.selected'));

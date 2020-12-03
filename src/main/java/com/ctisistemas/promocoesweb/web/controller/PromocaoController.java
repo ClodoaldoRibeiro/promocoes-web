@@ -123,11 +123,6 @@ public class PromocaoController {
 
 	@GetMapping("/datatables/server")
 	public ResponseEntity<?> datatables(HttpServletRequest request) {
-
-		System.out.println("start: " + request.getParameter("start"));
-		System.out.println("length: " + request.getParameter("length"));
-		System.out.println("draw: " + request.getParameter("draw"));
-
 		Map<String, Object> data = new PromocaoDataTablesService().execute(promocaoRepository, request);
 		return ResponseEntity.ok(data);
 	}
@@ -136,6 +131,12 @@ public class PromocaoController {
 	public ResponseEntity<?> excluirPromocao(@PathVariable("id") Long id) {
 		promocaoRepository.deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<?> preEditarPromocao(@PathVariable("id") Long id) {
+		Promocao promo = promocaoRepository.findById(id).get();
+		return ResponseEntity.ok(promo);
 	}
 
 }
