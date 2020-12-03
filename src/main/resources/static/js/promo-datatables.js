@@ -75,6 +75,13 @@ $(document).ready(function() {
 				method: "GET",
 				url: "/promocao/edit/" + id,
 				beforeSend: function() {
+
+					// removendo as mensagens
+					$("span").closest('.error-span').remove();
+
+					//remover as bordas vermelhas
+					$(".is-invalid").removeClass("is-invalid");
+
 					// abre o modal
 					$("#modal-form").modal('show');
 				},
