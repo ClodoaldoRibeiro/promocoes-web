@@ -15,9 +15,51 @@ Um gerenciador de promoções.
 * [Bootstrap 4](https://getbootstrap.com/) - Ferramenta para o esenvolvimento de componentes de interface e front-end.
 * [Thymeleaf 3.0.11](https://www.thymeleaf.org/) - Template Engine.
 
+ ## Telas
+ 
+ <p align="center">
+<img src="https://github.com/ClodoaldoRibeiro/promocoes-web/blob/main/screenshots/Cadastrar%20Promo%C3%A7%C3%A3o.png" alt="ClodoaldoRibeiro"/>
+<h5 align="center">Tela 1: Cadastrar uma Nova Promoção</h5>
+</p
 
+<br /> 
+<br /> 
+<br /> 
+
+<p align="center">
+<img src="https://github.com/ClodoaldoRibeiro/promocoes-web/blob/main/screenshots/Listar%20Promo%C3%A7%C3%B5es.png" alt="ClodoaldoRibeiro"/>
+<h5 align="center">Tela 2:Listando as promoções em Cards</h5>
+</p>
+
+<br /> 
+<br /> 
+<br /> 
+
+<p align="center">
+<img src="https://github.com/ClodoaldoRibeiro/promocoes-web/blob/main/screenshots/Tabela%20de%20Promo%C3%A7%C3%B5es.png" alt="ClodoaldoRibeiro"/>
+<h5 align="center">Tela 3: Tabela de Promoções</h5>
+</p>
+
+<br /> 
+<br /> 
+<br /> 
+
+<p align="center">
+<img src="https://github.com/ClodoaldoRibeiro/promocoes-web/blob/main/screenshots/Editar%20Promo%C3%A7%C3%A3o.png" alt="ClodoaldoRibeiro"/>
+<h5 align="center">Tela 4: Editar uma Promoção</h5>
+</p>
+
+<br /> 
+<br /> 
+<br />
+
+<p align="center">
+<img src="https://github.com/ClodoaldoRibeiro/promocoes-web/blob/main/screenshots/Excluir%20Promo%C3%A7%C3%A3o.png" alt="ClodoaldoRibeiro"/>
+<h5 align="center">Tela 5: Excluir uma promoção </h5>
+</p>
+ 
 ## License
-Copyright (c) CTI Sistemas. Todos os direitos reservados.
+Copyright (c) Clodoaldo Ribeiro. Todos os direitos reservados.
 
 Licenciado sob a licença MIT.
 
